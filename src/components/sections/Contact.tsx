@@ -84,7 +84,7 @@ const DATA_SOURCES = [
   { id: 'stripe', label: 'Stripe / Payments' },
   { id: 'other', label: 'Other Cloud Apps' },
 ];
-const USER_ROUPS = [
+const USER_GROUPS = [
   { id: 'executives', label: 'Executive Leadership' },
   { id: 'operations', label: 'Operations Teams' },
   { id: 'fundraising', label: 'Fundraising / Sales' },
@@ -261,7 +261,7 @@ export function Contact() {
                         <FormItem className="space-y-4">
                           <FormLabel>Organization Type</FormLabel>
                           <FormControl>
-                            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <RadioGroup onValueChange={field.onChange} value={field.value} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                               {['Small business', 'Nonprofit', 'Both/Hybrid', 'Not sure'].map(t => (
                                 <FormItem key={t} className="flex items-center space-x-3 space-y-0 border p-4 rounded-xl cursor-pointer hover:bg-accent hover:border-canyon-500/50 transition-all">
                                   <FormControl><RadioGroupItem value={t} /></FormControl>
@@ -276,7 +276,7 @@ export function Contact() {
                         <FormItem className="space-y-4">
                           <FormLabel>Team Size (Full-time Equivalents)</FormLabel>
                           <FormControl>
-                            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            <RadioGroup onValueChange={field.onChange} value={field.value} className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                               {['1-5', '6-20', '21-50', '50+'].map(s => (
                                 <FormItem key={s} className="flex items-center space-x-3 space-y-0 border p-4 rounded-xl cursor-pointer hover:bg-accent transition-all">
                                   <FormControl><RadioGroupItem value={s} /></FormControl>
@@ -377,10 +377,10 @@ export function Contact() {
                       <FormItem>
                         <FormLabel>Describe your primary data frustration or goal</FormLabel>
                         <FormControl>
-                          <Textarea 
-                            placeholder="e.g., We spend 10 hours a month manually merging spreadsheets for our board reports..." 
-                            className="min-h-[200px] text-lg border-slate-200 dark:border-slate-800" 
-                            {...field} 
+                          <Textarea
+                            placeholder="e.g., We spend 10 hours a month manually merging spreadsheets for our board reports..."
+                            className="min-h-[200px] text-lg border-slate-200 dark:border-slate-800"
+                            {...field}
                           />
                         </FormControl>
                         <FormDescription>
@@ -399,7 +399,7 @@ export function Contact() {
                         <FormItem className="space-y-4">
                           <FormLabel>What is your timeline for this project?</FormLabel>
                           <FormControl>
-                            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <RadioGroup onValueChange={field.onChange} value={field.value} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                               {['Just exploring', '1-3 months', 'Upcoming deadline'].map(t => (
                                 <FormItem key={t} className="flex items-center space-x-3 space-y-0 border p-4 rounded-xl cursor-pointer hover:bg-accent transition-all">
                                   <FormControl><RadioGroupItem value={t} /></FormControl>
@@ -418,7 +418,7 @@ export function Contact() {
                       <FormField control={form.control} name="users" render={() => (
                         <FormItem>
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            {USER_ROUPS.map((item) => (
+                            {USER_GROUPS.map((item) => (
                               <FormField
                                 key={item.id}
                                 control={form.control}

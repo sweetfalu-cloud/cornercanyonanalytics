@@ -16,11 +16,27 @@ const navLinks = [
 ];
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const handleLogoAction = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleLogoAction();
+    }
+  };
   return (
     <nav className="glass-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+          <div 
+            role="button"
+            tabIndex={0}
+            aria-label="Back to top"
+            className="flex items-center gap-2 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-canyon-600 rounded-md p-1" 
+            onClick={handleLogoAction}
+            onKeyDown={handleKeyDown}
+          >
             <BarChart3 className="h-6 w-6 text-canyon-600 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3" />
             <span className="text-xl font-bold tracking-tight text-foreground">
               Corner Canyon<span className="text-canyon-600">Analytics</span>
