@@ -55,8 +55,8 @@ const contactSchema = z.object({
   timing: z.enum(['Just exploring', '1-3 months', 'Upcoming deadline']),
   users: z.array(z.string()).min(1, 'Please select who will use the insights'),
   // Section 7: Scheduling
-  // Fixed TS2353: use invalid_type_error instead of required_error for z.date() in certain environments
-  preferredDate: z.date({ invalid_type_error: "Please select a date" }),
+  // Fixed TS2353: use 'message' property for z.date() custom error
+  preferredDate: z.date({ message: "Please select a date" }),
   preferredTime: z.string().min(1, 'Please select a time'),
   timezone: z.string().min(1, 'Please select a timezone'),
   // Section 8: Final Note
