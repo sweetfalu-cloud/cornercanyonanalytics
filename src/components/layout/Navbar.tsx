@@ -20,7 +20,7 @@ export function Navbar() {
     <nav className="glass-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          <div className="flex items-center gap-2 group cursor-pointer">
+          <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
             <BarChart3 className="h-6 w-6 text-canyon-600 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3" />
             <span className="text-xl font-bold tracking-tight text-foreground">
               Corner Canyon<span className="text-canyon-600">Analytics</span>
@@ -36,22 +36,22 @@ export function Navbar() {
                 {link.name}
               </a>
             ))}
-            <ThemeToggle className="static" />
-            <a href="#contact">
-              <Button className="bg-canyon-600 hover:bg-canyon-700 text-white transition-all duration-300 hover:shadow-md">
-                Get Started
+            <div className="flex items-center gap-4">
+              <ThemeToggle className="static" />
+              <Button asChild className="bg-canyon-600 hover:bg-canyon-700 text-white transition-all duration-300 hover:shadow-md">
+                <a href="#contact">Get Started</a>
               </Button>
-            </a>
+            </div>
           </div>
           <div className="md:hidden flex items-center gap-2">
             <ThemeToggle className="static" />
             <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
-                <Button variant="ghost" size="icon">
+                <Button variant="ghost" size="icon" aria-label="Open Menu">
                   <Menu className="h-6 w-6" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right">
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <SheetHeader>
                   <SheetTitle className="text-left flex items-center gap-2">
                     <BarChart3 className="h-5 w-5 text-canyon-600" />
@@ -64,16 +64,16 @@ export function Navbar() {
                       key={link.name}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="text-lg font-medium hover:text-canyon-600 transition-colors py-2 border-b border-muted"
+                      className="text-lg font-medium hover:text-canyon-600 transition-colors py-3 border-b border-muted"
                     >
                       {link.name}
                     </a>
                   ))}
-                  <a href="#contact" onClick={() => setIsOpen(false)}>
-                    <Button className="bg-canyon-600 hover:bg-canyon-700 text-white w-full mt-4">
+                  <Button asChild className="bg-canyon-600 hover:bg-canyon-700 text-white w-full mt-4 h-12">
+                    <a href="#contact" onClick={() => setIsOpen(false)}>
                       Get Started
-                    </Button>
-                  </a>
+                    </a>
+                  </Button>
                 </div>
               </SheetContent>
             </Sheet>
