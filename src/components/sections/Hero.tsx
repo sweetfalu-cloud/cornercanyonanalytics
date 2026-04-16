@@ -7,8 +7,8 @@ export function Hero() {
     <section className="relative overflow-hidden bg-background py-20 md:py-32 lg:py-48">
       {/* Background Decor */}
       <div className="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none" />
-      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-canyon-200/20 blur-[120px] rounded-full" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-slate-200/20 blur-[120px] rounded-full" />
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-canyon-200/20 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-slate-200/20 blur-[120px] rounded-full pointer-events-none" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center">
           <motion.div
@@ -24,7 +24,7 @@ export function Hero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl md:text-7xl lg:text-8xl font-display font-bold text-foreground tracking-tight leading-[1.1]"
+            className="text-4xl md:text-7xl lg:text-8xl font-display font-bold text-foreground tracking-tight leading-[1.1]"
           >
             Predict the Future with <br />
             <span className="text-gradient-canyon">Canyon-Deep Insights</span>
@@ -35,7 +35,7 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty"
           >
-            We combine high-performance data engineering with sophisticated predictive modeling 
+            We combine high-performance data engineering with sophisticated predictive modeling
             to turn your company's information into an unfair competitive advantage.
           </motion.p>
           <motion.div
@@ -44,13 +44,17 @@ export function Hero() {
             transition={{ duration: 0.5, delay: 0.3 }}
             className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4"
           >
-            <Button size="lg" className="bg-canyon-600 hover:bg-canyon-700 text-white px-8 h-14 text-lg font-semibold group">
-              Start Your Strategy
-              <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-            </Button>
-            <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-medium">
-              View Case Studies
-            </Button>
+            <a href="#contact">
+              <Button size="lg" className="bg-canyon-600 hover:bg-canyon-700 text-white px-8 h-14 text-lg font-semibold group w-full sm:w-auto">
+                Start Your Strategy
+                <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
+              </Button>
+            </a>
+            <a href="#services">
+              <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-medium w-full sm:w-auto">
+                View Case Studies
+              </Button>
+            </a>
           </motion.div>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import {
   LayoutDashboard,
   TrendingUp,
@@ -40,31 +41,61 @@ const services = [
     icon: BookOpen,
   },
 ];
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5 },
+  },
+};
 export function Services() {
   return (
     <section id="services" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="mb-16 text-center">
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-16 text-center"
+        >
           <h2 className="text-3xl md:text-5xl font-bold text-foreground">Our Services</h2>
           <p className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto">
             Actionable insights designed for small businesses and nonprofits. We make your data work for you, not the other way around.
           </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        </motion.div>
+        <motion.div 
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {services.map((service, index) => (
-            <Card key={index} className="group hover:-translate-y-1 transition-all duration-300 border-none shadow-sm hover:shadow-lg">
-              <CardHeader>
-                <div className="w-12 h-12 rounded-lg bg-canyon-100 dark:bg-canyon-900 flex items-center justify-center mb-4 group-hover:bg-canyon-600 group-hover:text-white transition-colors duration-300">
-                  <service.icon className="h-6 w-6 text-canyon-600 group-hover:text-white" />
-                </div>
-                <CardTitle className="text-xl">{service.title}</CardTitle>
-                <CardDescription className="text-base text-muted-foreground mt-2 leading-relaxed">
-                  {service.description}
-                </CardDescription>
-              </CardHeader>
-            </Card>
+            <motion.div key={index} variants={itemVariants}>
+              <Card className="group h-full hover:-translate-y-1 transition-all duration-300 border-none shadow-sm hover:shadow-lg">
+                <CardHeader>
+                  <div className="w-12 h-12 rounded-lg bg-canyon-100 dark:bg-canyon-900 flex items-center justify-center mb-4 group-hover:bg-canyon-600 group-hover:text-white transition-colors duration-300">
+                    <service.icon className="h-6 w-6 text-canyon-600 group-hover:text-white" />
+                  </div>
+                  <CardTitle className="text-xl">{service.title}</CardTitle>
+                  <CardDescription className="text-base text-muted-foreground mt-2 leading-relaxed">
+                    {service.description}
+                  </CardDescription>
+                </CardHeader>
+              </Card>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
