@@ -13,12 +13,20 @@ export function Footer() {
               </span>
             </div>
             <p className="max-w-md text-slate-400">
-              Transforming complex data landscapes into clear strategic pathways. 
-              We help high-growth enterprises leverage predictive modeling and 
-              advanced data strategy to outpace the competition.
+              Transforming complex data landscapes into clear strategic pathways.
+              We help high-growth enterprises and nonprofits leverage data
+              to outpace the competition and drive meaningful impact.
             </p>
             <div className="flex gap-4 pt-2">
-              <Linkedin className="h-5 w-5 cursor-pointer hover:text-white transition-colors" />
+              <a 
+                href="https://www.linkedin.com/company/corner-canyon-analytics" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:text-white transition-colors"
+                aria-label="Visit our LinkedIn page"
+              >
+                <Linkedin className="h-5 w-5" />
+              </a>
               <Twitter className="h-5 w-5 cursor-pointer hover:text-white transition-colors" />
               <Mail className="h-5 w-5 cursor-pointer hover:text-white transition-colors" />
             </div>
