@@ -14,21 +14,32 @@ export function Footer() {
             </div>
             <p className="max-w-md text-slate-400">
               Transforming complex data landscapes into clear strategic pathways.
-              We help high-growth enterprises and nonprofits leverage data
-              to outpace the competition and drive meaningful impact.
+              We help small businesses and nonprofits leverage data
+              to drive meaningful impact and sustainable growth.
             </p>
             <div className="flex gap-4 pt-2">
-              <a 
-                href="https://www.linkedin.com/company/corner-canyon-analytics" 
-                target="_blank" 
+              <a
+                href="https://www.linkedin.com/company/corner-canyon-analytics"
+                target="_blank"
                 rel="noopener noreferrer"
-                className="hover:text-white transition-colors"
+                className="hover:text-white transition-all duration-200"
                 aria-label="Visit our LinkedIn page"
               >
                 <Linkedin className="h-5 w-5" />
               </a>
-              <Twitter className="h-5 w-5 cursor-pointer hover:text-white transition-colors" />
-              <Mail className="h-5 w-5 cursor-pointer hover:text-white transition-colors" />
+              <button
+                className="hover:text-white transition-all duration-200"
+                aria-label="Follow us on Twitter"
+              >
+                <Twitter className="h-5 w-5" />
+              </button>
+              <a
+                href="mailto:info@cornercanyon.com"
+                className="hover:text-white transition-all duration-200"
+                aria-label="Email us"
+              >
+                <Mail className="h-5 w-5" />
+              </a>
             </div>
           </div>
           <div>
@@ -36,8 +47,8 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li><a href="#about" className="hover:text-white transition-colors">About Us</a></li>
               <li><a href="#services" className="hover:text-white transition-colors">Services</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Insights</a></li>
-              <li><a href="#" className="hover:text-white transition-colors">Careers</a></li>
+              <li><a href="#contact" className="hover:text-white transition-colors">Insights</a></li>
+              <li><a href="#contact" className="hover:text-white transition-colors">Careers</a></li>
             </ul>
           </div>
           <div>

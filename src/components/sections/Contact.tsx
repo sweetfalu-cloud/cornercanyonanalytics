@@ -11,7 +11,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
-  company: z.string().min(2, 'Company name is required'),
+  company: z.string().min(2, 'Organization or Company name is required'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
 });
 type ContactFormValues = z.infer<typeof contactSchema>;
@@ -57,7 +57,7 @@ export function Contact() {
             Ready to unlock the power of your data? Reach out for a complimentary consultation.
           </p>
         </div>
-        <div className="bg-background rounded-3xl p-8 md:p-12 shadow-soft border">
+        <div className="bg-background rounded-3xl p-8 md:p-12 shadow-xl border">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -81,7 +81,7 @@ export function Contact() {
                     <FormItem>
                       <FormLabel>Work Email</FormLabel>
                       <FormControl>
-                        <Input placeholder="jane@company.com" {...field} />
+                        <Input placeholder="jane@organization.com" {...field} />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -93,7 +93,7 @@ export function Contact() {
                 name="company"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Company Name</FormLabel>
+                    <FormLabel>Organization or Company</FormLabel>
                     <FormControl>
                       <Input placeholder="Corner Canyon Analytics" {...field} />
                     </FormControl>
@@ -108,19 +108,19 @@ export function Contact() {
                   <FormItem>
                     <FormLabel>How can we help?</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder="Tell us about your data challenges..." 
+                      <Textarea
+                        placeholder="Tell us about your data challenges..."
                         className="min-h-[150px] resize-none"
-                        {...field} 
+                        {...field}
                       />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button 
-                type="submit" 
-                className="w-full bg-canyon-600 hover:bg-canyon-700 text-white h-12 text-lg font-semibold"
+              <Button
+                type="submit"
+                className="w-full bg-canyon-600 hover:bg-canyon-700 text-white h-12 text-lg font-semibold transition-all"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? (
