@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Menu, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +15,7 @@ const navLinks = [
   { name: 'Contact', href: '#contact' },
 ];
 export function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <nav className="glass-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -37,13 +37,15 @@ export function Navbar() {
               </a>
             ))}
             <ThemeToggle className="static" />
-            <Button className="bg-canyon-600 hover:bg-canyon-700 text-white">
-              Get Started
-            </Button>
+            <a href="#contact">
+              <Button className="bg-canyon-600 hover:bg-canyon-700 text-white">
+                Get Started
+              </Button>
+            </a>
           </div>
           <div className="md:hidden flex items-center gap-2">
             <ThemeToggle className="static" />
-            <Sheet>
+            <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                 <Button variant="ghost" size="icon">
                   <Menu className="h-6 w-6" />
@@ -61,14 +63,17 @@ export function Navbar() {
                     <a
                       key={link.name}
                       href={link.href}
+                      onClick={() => setIsOpen(false)}
                       className="text-lg font-medium hover:text-canyon-600 transition-colors"
                     >
                       {link.name}
                     </a>
                   ))}
-                  <Button className="bg-canyon-600 hover:bg-canyon-700 text-white w-full mt-4">
-                    Get Started
-                  </Button>
+                  <a href="#contact" onClick={() => setIsOpen(false)}>
+                    <Button className="bg-canyon-600 hover:bg-canyon-700 text-white w-full mt-4">
+                      Get Started
+                    </Button>
+                  </a>
                 </div>
               </SheetContent>
             </Sheet>

@@ -1,11 +1,18 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { CheckCircle2 } from 'lucide-react';
 export function About() {
   return (
-    <section id="about" className="py-20 md:py-32 bg-background">
+    <section id="about" className="py-20 md:py-32 bg-background overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div className="space-y-8">
+          <motion.div 
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="space-y-8"
+          >
             <div>
               <h2 className="text-canyon-600 font-semibold tracking-wide uppercase text-sm">Our Ethos</h2>
               <h3 className="text-3xl md:text-5xl font-bold text-foreground mt-2 leading-tight">
@@ -13,8 +20,8 @@ export function About() {
               </h3>
             </div>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              Founded at the intersection of technology and market research, Corner Canyon 
-              Analytics was born from a simple observation: most companies are drowning 
+              Founded at the intersection of technology and market research, Corner Canyon
+              Analytics was born from a simple observation: most companies are drowning
               in data but starving for insights.
             </p>
             <div className="space-y-4">
@@ -30,8 +37,14 @@ export function About() {
                 </div>
               ))}
             </div>
-          </div>
-          <div className="relative">
+          </motion.div>
+          <motion.div 
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="relative"
+          >
             <div className="aspect-[4/3] rounded-2xl bg-gradient-to-br from-canyon-500 to-canyon-700 p-8 flex flex-col justify-end text-white overflow-hidden">
               <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
               <div className="relative z-10 space-y-4">
@@ -45,7 +58,7 @@ export function About() {
               </p>
               <p className="mt-4 font-bold text-sm">— Director of Ops, Fortune 500 Tech</p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
