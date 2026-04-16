@@ -10,9 +10,11 @@ import {
   ChevronLeft,
   Calendar as CalendarIcon,
   CheckCircle2,
-  Info,
   Clock,
-  Globe
+  Globe,
+  Database,
+  Users as UsersIcon,
+  Target
 } from 'lucide-react';
 import { toast } from 'sonner';
 import { format, startOfDay } from 'date-fns';
@@ -59,12 +61,35 @@ const STEPS = [
   { id: 'intro', title: 'Start' },
   { id: 'contact', title: 'Contact' },
   { id: 'about', title: 'Organization' },
-  { id: 'needs', title: 'Needs' },
-  { id: 'data', title: 'Data' },
-  { id: 'challenge', title: 'Challenge' },
+  { id: 'needs', title: 'Services' },
+  { id: 'data', title: 'Data Sources' },
+  { id: 'challenge', title: 'The Challenge' },
   { id: 'context', title: 'Context' },
   { id: 'schedule', title: 'Schedule' },
   { id: 'final', title: 'Finish' },
+];
+const SERVICE_OPTIONS = [
+  { id: 'dashboards', label: 'Dashboards & Visualization' },
+  { id: 'financial', label: 'Financial Performance Analysis' },
+  { id: 'impact', label: 'Impact & Grant Reporting' },
+  { id: 'growth', label: 'Growth & Donor Analytics' },
+  { id: 'fractional', label: 'Fractional Analytics Support' },
+  { id: 'training', label: 'Team Data Literacy Training' },
+];
+const DATA_SOURCES = [
+  { id: 'excel', label: 'Excel / Google Sheets' },
+  { id: 'quickbooks', label: 'QuickBooks / Accounting' },
+  { id: 'salesforce', label: 'Salesforce / CRM' },
+  { id: 'sql', label: 'SQL / Database' },
+  { id: 'stripe', label: 'Stripe / Payments' },
+  { id: 'other', label: 'Other Cloud Apps' },
+];
+const USER_ROUPS = [
+  { id: 'executives', label: 'Executive Leadership' },
+  { id: 'operations', label: 'Operations Teams' },
+  { id: 'fundraising', label: 'Fundraising / Sales' },
+  { id: 'board', label: 'Board of Directors' },
+  { id: 'public', label: 'Public / Donors' },
 ];
 const TIMEZONES = [
   { label: 'Eastern Time (ET)', value: 'America/New_York' },
@@ -135,7 +160,7 @@ export function Contact() {
       });
       if (!response.ok) throw new Error('Submission failed');
       toast.success('Consultation Request Received!', {
-        description: "Thank you for the detailed information. I'll review your responses and come prepared for our call.",
+        description: "Thank you for the detailed information. We will review your responses and reach out shortly.",
       });
       form.reset();
       setStep(0);
@@ -153,7 +178,7 @@ export function Contact() {
     <section id="contact" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900/50">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-10 text-center">
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground">Consultation Request</h2>
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground tracking-tight">Consultation Request</h2>
           <p className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto">
             Ready to unlock the power of your data? Tell us about your organization and let's find the best path forward.
           </p>
@@ -185,7 +210,7 @@ export function Contact() {
                     className="space-y-8"
                   >
                     <div className="space-y-4">
-                      <h3 className="text-2xl md:text-3xl font-bold text-foreground">Strategy Consultation Request</h3>
+                      <h3 className="text-2xl md:text-3xl font-bold text-foreground">Strategy Consultation</h3>
                       <p className="text-lg text-muted-foreground leading-relaxed">
                         Corner Canyon Analytics provides personalized data strategy for teams with a mission. This form helps us prepare so our conversation is as valuable as possible.
                       </p>
@@ -247,10 +272,175 @@ export function Contact() {
                           </FormControl>
                         </FormItem>
                       )} />
+                      <FormField control={form.control} name="orgSize" render={({ field }) => (
+                        <FormItem className="space-y-4">
+                          <FormLabel>Team Size (Full-time Equivalents)</FormLabel>
+                          <FormControl>
+                            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                              {['1-5', '6-20', '21-50', '50+'].map(s => (
+                                <FormItem key={s} className="flex items-center space-x-3 space-y-0 border p-4 rounded-xl cursor-pointer hover:bg-accent transition-all">
+                                  <FormControl><RadioGroupItem value={s} /></FormControl>
+                                  <FormLabel className="font-medium cursor-pointer">{s}</FormLabel>
+                                </FormItem>
+                              ))}
+                            </RadioGroup>
+                          </FormControl>
+                        </FormItem>
+                      )} />
                       <FormField control={form.control} name="mission" render={({ field }) => (
                         <FormItem>
                           <FormLabel>Primary Industry or Mission</FormLabel>
                           <FormControl><Input className="h-12" placeholder="e.g., Youth mentorship, Artisan retail..." {...field} /></FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )} />
+                    </div>
+                  </motion.div>
+                )}
+                {step === 3 && (
+                  <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+                    <h3 className="text-2xl font-bold flex items-center gap-2">
+                      <Target className="h-6 w-6 text-canyon-600" /> Services Needed
+                    </h3>
+                    <FormField control={form.control} name="needs" render={() => (
+                      <FormItem>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                          {SERVICE_OPTIONS.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="needs"
+                              render={({ field }) => (
+                                <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0 border p-4 rounded-xl hover:bg-accent transition-all">
+                                  <FormControl>
+                                    <Checkbox
+                                      checked={field.value?.includes(item.label)}
+                                      onCheckedChange={(checked) => {
+                                        return checked
+                                          ? field.onChange([...field.value, item.label])
+                                          : field.onChange(field.value?.filter((value) => value !== item.label));
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <FormLabel className="font-medium cursor-pointer">{item.label}</FormLabel>
+                                </FormItem>
+                              )}
+                            />
+                          ))}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </motion.div>
+                )}
+                {step === 4 && (
+                  <motion.div key="step4" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+                    <h3 className="text-2xl font-bold flex items-center gap-2">
+                      <Database className="h-6 w-6 text-canyon-600" /> Data Sources
+                    </h3>
+                    <p className="text-muted-foreground">Which tools are you currently using to store your organization's data?</p>
+                    <FormField control={form.control} name="dataStack" render={() => (
+                      <FormItem>
+                        <div className="grid grid-cols-2 gap-4">
+                          {DATA_SOURCES.map((item) => (
+                            <FormField
+                              key={item.id}
+                              control={form.control}
+                              name="dataStack"
+                              render={({ field }) => (
+                                <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0 border p-4 rounded-xl hover:bg-accent transition-all">
+                                  <FormControl>
+                                    <Checkbox
+                                      checked={field.value?.includes(item.label)}
+                                      onCheckedChange={(checked) => {
+                                        return checked
+                                          ? field.onChange([...field.value, item.label])
+                                          : field.onChange(field.value?.filter((value) => value !== item.label));
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <FormLabel className="font-medium cursor-pointer">{item.label}</FormLabel>
+                                </FormItem>
+                              )}
+                            />
+                          ))}
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </motion.div>
+                )}
+                {step === 5 && (
+                  <motion.div key="step5" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
+                    <h3 className="text-2xl font-bold">The Biggest Challenge</h3>
+                    <FormField control={form.control} name="challenge" render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Describe your primary data frustration or goal</FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            placeholder="e.g., We spend 10 hours a month manually merging spreadsheets for our board reports..." 
+                            className="min-h-[200px] text-lg border-slate-200 dark:border-slate-800" 
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormDescription>
+                          Be as detailed as you like. This helps us come prepared with ideas.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )} />
+                  </motion.div>
+                )}
+                {step === 6 && (
+                  <motion.div key="step6" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
+                    <div className="space-y-6">
+                      <h3 className="text-2xl font-bold">Strategic Context</h3>
+                      <FormField control={form.control} name="timing" render={({ field }) => (
+                        <FormItem className="space-y-4">
+                          <FormLabel>What is your timeline for this project?</FormLabel>
+                          <FormControl>
+                            <RadioGroup onValueChange={field.onChange} defaultValue={field.value} className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                              {['Just exploring', '1-3 months', 'Upcoming deadline'].map(t => (
+                                <FormItem key={t} className="flex items-center space-x-3 space-y-0 border p-4 rounded-xl cursor-pointer hover:bg-accent transition-all">
+                                  <FormControl><RadioGroupItem value={t} /></FormControl>
+                                  <FormLabel className="font-medium cursor-pointer">{t}</FormLabel>
+                                </FormItem>
+                              ))}
+                            </RadioGroup>
+                          </FormControl>
+                        </FormItem>
+                      )} />
+                    </div>
+                    <div className="space-y-4">
+                      <h4 className="font-bold flex items-center gap-2">
+                        <UsersIcon className="h-5 w-5 text-canyon-600" /> Who will use these insights?
+                      </h4>
+                      <FormField control={form.control} name="users" render={() => (
+                        <FormItem>
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {USER_ROUPS.map((item) => (
+                              <FormField
+                                key={item.id}
+                                control={form.control}
+                                name="users"
+                                render={({ field }) => (
+                                  <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0 border p-4 rounded-xl hover:bg-accent transition-all">
+                                    <FormControl>
+                                      <Checkbox
+                                        checked={field.value?.includes(item.label)}
+                                        onCheckedChange={(checked) => {
+                                          return checked
+                                            ? field.onChange([...field.value, item.label])
+                                            : field.onChange(field.value?.filter((value) => value !== item.label));
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <FormLabel className="font-medium cursor-pointer">{item.label}</FormLabel>
+                                </FormItem>
+                                )}
+                              />
+                            ))}
+                          </div>
                           <FormMessage />
                         </FormItem>
                       )} />
@@ -333,43 +523,6 @@ export function Contact() {
                     )} />
                   </motion.div>
                 )}
-                {/* Step generic content (summarized for briefness in this final phase output) */}
-                {step > 2 && step < 7 && (
-                   <motion.div key={`step${step}`} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
-                      <h3 className="text-2xl font-bold">{STEPS[step].title}</h3>
-                      <p className="text-muted-foreground">This section helps us understand your specific technical needs.</p>
-                      <div className="p-8 border border-dashed rounded-2xl flex flex-col items-center justify-center text-center gap-4 bg-slate-50/50 dark:bg-slate-900/20">
-                         <div className="h-12 w-12 rounded-full bg-canyon-100 dark:bg-canyon-900 flex items-center justify-center">
-                            <Info className="h-6 w-6 text-canyon-600" />
-                         </div>
-                         <p className="text-sm">Please continue to provide context about your {STEPS[step].title.toLowerCase()}.</p>
-                      </div>
-                      {/* Placeholder for real inputs from codebase to keep file valid */}
-                      {step === 5 && (
-                         <FormField control={form.control} name="challenge" render={({ field }) => (
-                          <FormItem>
-                            <FormControl><Textarea placeholder="Share your biggest data challenge..." className="min-h-[150px]" {...field} /></FormControl>
-                            <FormMessage />
-                          </FormItem>
-                        )} />
-                      )}
-                      {step === 3 && (
-                         <FormField control={form.control} name="needs" render={({ field }) => (
-                          <FormItem><Checkbox checked={true} disabled className="hidden" /><FormMessage /></FormItem>
-                        )} />
-                      )}
-                      {step === 4 && (
-                         <FormField control={form.control} name="dataStack" render={({ field }) => (
-                          <FormItem><Checkbox checked={true} disabled className="hidden" /><FormMessage /></FormItem>
-                        )} />
-                      )}
-                      {step === 6 && (
-                        <FormField control={form.control} name="users" render={({ field }) => (
-                          <FormItem><Checkbox checked={true} disabled className="hidden" /><FormMessage /></FormItem>
-                        )} />
-                      )}
-                   </motion.div>
-                )}
                 {step === 8 && (
                   <motion.div key="step8" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
                     <h3 className="text-2xl font-bold">Final Notes</h3>
@@ -384,7 +537,7 @@ export function Contact() {
                         <FormMessage />
                       </FormItem>
                     )} />
-                    <div className="bg-slate-900 dark:bg-slate-100 p-8 rounded-2xl text-white dark:text-slate-900">
+                    <div className="bg-slate-900 dark:bg-slate-100 p-8 rounded-2xl text-white dark:text-slate-900 shadow-inner">
                       <h4 className="font-bold flex items-center gap-3 mb-3 text-lg">
                         <CheckCircle2 className="h-6 w-6 text-canyon-400 dark:text-canyon-600" />
                         Ready to launch?
