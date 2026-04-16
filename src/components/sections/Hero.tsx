@@ -18,7 +18,7 @@ export function Hero() {
             className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-canyon-100 dark:bg-canyon-950 border border-canyon-200 dark:border-canyon-800 text-canyon-700 dark:text-canyon-400 text-sm font-medium mb-6"
           >
             <Sparkles className="h-4 w-4" />
-            <span>Redefining Enterprise Intelligence</span>
+            <span>Empowering Purpose-Driven Teams</span>
           </motion.div>
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
@@ -29,15 +29,21 @@ export function Hero() {
             Predict the Future with <br />
             <span className="text-gradient-canyon">Canyon-Deep Insights</span>
           </motion.h1>
-          <motion.p
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-8 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto text-pretty"
+            className="mt-8 max-w-2xl mx-auto"
           >
-            We combine high-performance data engineering with sophisticated predictive modeling
-            to turn your company's information into an unfair competitive advantage.
-          </motion.p>
+            <p className="text-xl md:text-2xl font-bold text-foreground text-pretty">
+              Clear insights. Practical decisions. <br className="hidden sm:block" />
+              Analytics for small businesses and nonprofits.
+            </p>
+            <p className="mt-4 text-lg text-muted-foreground">
+              We combine professional data engineering with approachable guidance 
+              to turn your organization's information into your greatest asset.
+            </p>
+          </motion.div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -52,7 +58,7 @@ export function Hero() {
             </a>
             <a href="#services">
               <Button size="lg" variant="outline" className="h-14 px-8 text-lg font-medium w-full sm:w-auto">
-                View Case Studies
+                Explore Services
               </Button>
             </a>
           </motion.div>
