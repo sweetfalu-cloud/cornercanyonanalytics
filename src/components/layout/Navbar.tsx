@@ -20,8 +20,8 @@ export function Navbar() {
     <nav className="glass-nav">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
-          <div className="flex items-center gap-2">
-            <BarChart3 className="h-6 w-6 text-canyon-600" />
+          <div className="flex items-center gap-2 group cursor-pointer">
+            <BarChart3 className="h-6 w-6 text-canyon-600 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3" />
             <span className="text-xl font-bold tracking-tight text-foreground">
               Corner Canyon<span className="text-canyon-600">Analytics</span>
             </span>
@@ -38,7 +38,7 @@ export function Navbar() {
             ))}
             <ThemeToggle className="static" />
             <a href="#contact">
-              <Button className="bg-canyon-600 hover:bg-canyon-700 text-white">
+              <Button className="bg-canyon-600 hover:bg-canyon-700 text-white transition-all duration-300 hover:shadow-md">
                 Get Started
               </Button>
             </a>
@@ -55,7 +55,7 @@ export function Navbar() {
                 <SheetHeader>
                   <SheetTitle className="text-left flex items-center gap-2">
                     <BarChart3 className="h-5 w-5 text-canyon-600" />
-                    Analytics
+                    Corner Canyon
                   </SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-4 mt-8">
@@ -64,7 +64,7 @@ export function Navbar() {
                       key={link.name}
                       href={link.href}
                       onClick={() => setIsOpen(false)}
-                      className="text-lg font-medium hover:text-canyon-600 transition-colors"
+                      className="text-lg font-medium hover:text-canyon-600 transition-colors py-2 border-b border-muted"
                     >
                       {link.name}
                     </a>
