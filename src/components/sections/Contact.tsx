@@ -3,13 +3,13 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  Loader2, 
-  Send, 
-  ChevronRight, 
-  ChevronLeft, 
-  Calendar as CalendarIcon, 
-  CheckCircle2, 
+import {
+  Loader2,
+  Send,
+  ChevronRight,
+  ChevronLeft,
+  Calendar as CalendarIcon,
+  CheckCircle2,
   Info,
   Clock
 } from 'lucide-react';
@@ -18,14 +18,14 @@ import { format } from 'date-fns';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { 
-  Form, 
-  FormControl, 
-  FormField, 
-  FormItem, 
-  FormLabel, 
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
   FormMessage,
-  FormDescription 
+  FormDescription
 } from '@/components/ui/form';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -55,7 +55,8 @@ const contactSchema = z.object({
   timing: z.enum(['Just exploring', '1-3 months', 'Upcoming deadline']),
   users: z.array(z.string()).min(1, 'Please select who will use the insights'),
   // Section 7: Scheduling
-  preferredDate: z.date({ required_error: "Please select a date" }),
+  // Fixed TS2353: use invalid_type_error instead of required_error for z.date() in certain environments
+  preferredDate: z.date({ invalid_type_error: "Please select a date" }),
   preferredTime: z.string().min(1, 'Please select a time'),
   timezone: z.string().min(1, 'Please select a timezone'),
   // Section 8: Final Note
@@ -95,6 +96,8 @@ export function Contact() {
       users: [],
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
       preferredTime: '',
+      // Initialized as undefined for controlled/uncontrolled stability
+      preferredDate: undefined,
       finalNote: '',
     },
     mode: 'onChange',
@@ -113,7 +116,7 @@ export function Contact() {
       ['finalNote'], // Final
     ];
     const currentFields = fieldsByStep[step];
-    if (currentFields.length > 0) {
+    if (currentFields && currentFields.length > 0) {
       const isValid = await form.trigger(currentFields);
       if (!isValid) return;
     }
@@ -154,8 +157,8 @@ export function Contact() {
             <span>{Math.round(progress)}% Complete</span>
           </div>
           <div className="h-2 w-full bg-slate-200 dark:bg-slate-800 rounded-full overflow-hidden">
-            <motion.div 
-              className="h-full bg-canyon-600" 
+            <motion.div
+              className="h-full bg-canyon-600"
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}
               transition={{ duration: 0.3 }}
@@ -368,10 +371,10 @@ export function Contact() {
                           What is the one thing about your data or reporting that keeps you up at night? (1-3 sentences)
                         </FormDescription>
                         <FormControl>
-                          <Textarea 
-                            placeholder="e.g., It takes our team 10 hours every month to manually combine 5 spreadsheets just to see our basic revenue..." 
-                            className="min-h-[180px] text-lg" 
-                            {...field} 
+                          <Textarea
+                            placeholder="e.g., It takes our team 10 hours every month to manually combine 5 spreadsheets just to see our basic revenue..."
+                            className="min-h-[180px] text-lg"
+                            {...field}
                           />
                         </FormControl>
                         <FormMessage />
@@ -456,12 +459,12 @@ export function Contact() {
                               </FormControl>
                             </PopoverTrigger>
                             <PopoverContent className="w-auto p-0" align="start">
-                              <Calendar 
-                                mode="single" 
-                                selected={field.value} 
-                                onSelect={field.onChange} 
-                                disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6} 
-                                initialFocus 
+                              <Calendar
+                                mode="single"
+                                selected={field.value}
+                                onSelect={field.onChange}
+                                disabled={(date) => date < new Date() || date.getDay() === 0 || date.getDay() === 6}
+                                initialFocus
                               />
                             </PopoverContent>
                           </Popover>
