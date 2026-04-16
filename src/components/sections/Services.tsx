@@ -1,101 +1,70 @@
 import React from 'react';
-import { motion } from 'framer-motion';
-import {
-  LayoutDashboard,
-  TrendingUp,
-  Heart,
-  Search,
-  Handshake,
-  BookOpen
+import { 
+  Database, 
+  LineChart, 
+  BrainCircuit, 
+  Zap, 
+  ShieldCheck, 
+  Globe 
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 const services = [
   {
-    title: 'Data Clarity & Dashboards',
-    description: 'We organize your existing data into simple, easy-to-read dashboards. Stop digging through spreadsheets and start seeing your KPIs clearly in Excel, Google Sheets, or BI tools.',
-    icon: LayoutDashboard,
+    title: 'Data Strategy',
+    description: 'We design end-to-end data architectures that align with your business goals.',
+    icon: Database,
   },
   {
-    title: 'Business & Financial Insights',
-    description: 'Understand your true profitability. We analyze your revenue, costs, and trends to provide practical recommendations that help you make better financial decisions.',
-    icon: TrendingUp,
+    title: 'Predictive Modeling',
+    description: 'Anticipate market shifts and customer behavior with custom AI-driven models.',
+    icon: BrainCircuit,
   },
   {
-    title: 'Nonprofit Impact & Grant Reporting',
-    description: 'Show funders exactly what you’ve achieved. We help define impact metrics, support grant reporting, and create board-ready visuals that tell your story confidently.',
-    icon: Heart,
+    title: 'Visual Intelligence',
+    description: 'Interactive dashboards that tell the story your data is hiding.',
+    icon: LineChart,
   },
   {
-    title: 'Analysis for Growth',
-    description: 'Find out what’s working and what isn’t. We look at donor/customer behavior and marketing effectiveness to pinpoint exactly where you should focus your energy to grow.',
-    icon: Search,
+    title: 'Performance Optimization',
+    description: 'Optimize your pipeline for speed and cost-efficiency in cloud environments.',
+    icon: Zap,
   },
   {
-    title: 'Fractional Analytics Partner',
-    description: 'Get expert data support without the cost of a full-time hire. We provide ongoing dashboard maintenance, monthly insight summaries, and strategy calls for small teams.',
-    icon: Handshake,
+    title: 'Governance & Security',
+    description: 'Ensure compliance and security are baked into your data lifecycle.',
+    icon: ShieldCheck,
   },
   {
-    title: 'Data Literacy & Training',
-    description: 'Build your team’s confidence. We offer simple walkthroughs and training to help your leaders understand how to interpret data and use it daily.',
-    icon: BookOpen,
+    title: 'Market Analysis',
+    description: 'Leverage global data sets to identify expansion opportunities.',
+    icon: Globe,
   },
 ];
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5 },
-  },
-};
 export function Services() {
   return (
     <section id="services" className="py-20 md:py-32 bg-slate-50 dark:bg-slate-900/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="mb-16 text-center"
-        >
-          <h2 className="text-3xl md:text-5xl font-bold text-foreground">Our Services</h2>
+        <div className="mb-16 text-center">
+          <h2 className="text-3xl md:text-5xl font-bold text-foreground">Core Competencies</h2>
           <p className="mt-4 text-muted-foreground text-lg max-w-2xl mx-auto">
-            Actionable insights designed for small businesses and nonprofits. We make your data work for you, not the other way around.
+            Our multi-disciplinary approach ensures no data point is left behind in your journey toward digital maturity.
           </p>
-        </motion.div>
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {services.map((service, index) => (
-            <motion.div key={index} variants={itemVariants}>
-              <Card className="group h-full hover:-translate-y-1 transition-all duration-300 border-none shadow-sm hover:shadow-lg">
-                <CardHeader>
-                  <div className="w-12 h-12 rounded-lg bg-canyon-100 dark:bg-canyon-900 flex items-center justify-center mb-4 group-hover:bg-canyon-600 group-hover:text-white transition-colors duration-300">
-                    <service.icon className="h-6 w-6 text-canyon-600 group-hover:text-white" />
-                  </div>
-                  <CardTitle className="text-xl">{service.title}</CardTitle>
-                  <CardDescription className="text-base text-muted-foreground mt-2 leading-relaxed">
-                    {service.description}
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </motion.div>
+            <Card key={index} className="group hover:-translate-y-1 transition-all duration-300 border-none shadow-soft hover:shadow-lg">
+              <CardHeader>
+                <div className="w-12 h-12 rounded-lg bg-canyon-100 dark:bg-canyon-900 flex items-center justify-center mb-4 group-hover:bg-canyon-600 group-hover:text-white transition-colors duration-300">
+                  <service.icon className="h-6 w-6 text-canyon-600 group-hover:text-white" />
+                </div>
+                <CardTitle className="text-xl">{service.title}</CardTitle>
+                <CardDescription className="text-base text-muted-foreground mt-2">
+                  {service.description}
+                </CardDescription>
+              </CardHeader>
+            </Card>
           ))}
-        </motion.div>
+        </div>
       </div>
     </section>
   );
