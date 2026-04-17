@@ -6,7 +6,7 @@ export function userRoutes(app: Hono<{ Bindings: Env }>) {
         try {
             const body = await c.req.json();
             // Required Lead Qualification Fields Validation
-            const required = ['name', 'email', 'organization', 'role', 'orgType', 'mission', 'needs', 'challenge', 'preferredDate'];
+            const required = ['name', 'email', 'organization', 'role', 'orgType', 'mission', 'needs', 'challenge', 'preferredDate', 'orgSize', 'dataStack', 'timing', 'users', 'preferredTime', 'timezone'];
             const missing = required.filter(field => {
                 const val = body[field];
                 if (Array.isArray(val)) {
