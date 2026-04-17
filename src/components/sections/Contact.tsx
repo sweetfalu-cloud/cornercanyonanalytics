@@ -51,9 +51,12 @@ const contactSchema = z.object({
   challenge: z.string().min(10, 'Please provide a bit more detail (min 10 chars)'),
   timing: z.enum(['Just exploring', '1-3 months', 'Upcoming deadline']),
   users: z.array(z.string()).min(1, 'Please select who will use the insights'),
-  preferredDate: z.date({ message: "Please select a date" }),
-  preferredTime: z.string().min(1, 'Please select a time'),
-  timezone: z.string().min(1, 'Please select a timezone'),
+  preferredDate: z.date({ 
+    required_error: "Please select a preferred date for our call",
+    invalid_type_error: "That's not a valid date",
+  }),
+  preferredTime: z.string().min(1, 'Please select a preferred time window'),
+  timezone: z.string().min(1, 'Please select your timezone'),
   finalNote: z.string().optional(),
 });
 type ContactFormValues = z.infer<typeof contactSchema>;
@@ -125,7 +128,7 @@ export function Contact() {
       users: [],
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'America/New_York',
       preferredTime: '',
-      preferredDate: undefined,
+      preferredDate: undefined as unknown as Date,
       finalNote: '',
     },
     mode: 'onChange',
@@ -145,11 +148,21 @@ export function Contact() {
     const currentFields = fieldsByStep[step];
     if (currentFields?.length > 0) {
       const isValid = await form.trigger(currentFields);
-      if (!isValid) return;
+      if (!isValid) {
+        toast.error("Please fill required fields", { 
+          description: "One or more required fields need your attention before moving forward.",
+          duration: 3000
+        });
+        return;
+      }
     }
     setStep((s) => Math.min(s + 1, STEPS.length - 1));
+    window.scrollTo({ top: document.getElementById('contact')?.offsetTop ?? 0, behavior: 'smooth' });
   };
-  const prevStep = () => setStep((s) => Math.max(s - 1, 0));
+  const prevStep = () => {
+    setStep((s) => Math.max(s - 1, 0));
+    window.scrollTo({ top: document.getElementById('contact')?.offsetTop ?? 0, behavior: 'smooth' });
+  };
   const onSubmit = async (values: ContactFormValues) => {
     setIsSubmitting(true);
     try {
@@ -158,16 +171,17 @@ export function Contact() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),
       });
-      if (!response.ok) throw new Error('Submission failed');
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || 'Submission failed');
       toast.success('Consultation Request Received!', {
-        description: "Thank you for the detailed information. We will review your responses and reach out shortly.",
+        description: "Thank you for the detailed information. We'll reach out shortly to confirm our call.",
       });
       form.reset();
       setStep(0);
     } catch (error) {
       console.error('Contact form error:', error);
       toast.error('Submission Failed', {
-        description: 'Please try again or email us directly at info@cornercanyon.com',
+        description: error instanceof Error ? error.message : 'Please try again or email us directly at info@cornercanyon.com',
       });
     } finally {
       setIsSubmitting(false);
@@ -197,7 +211,7 @@ export function Contact() {
             />
           </div>
         </div>
-        <div className="bg-background rounded-3xl p-6 md:p-12 shadow-2xl border border-slate-200 dark:border-slate-800 relative overflow-hidden">
+        <div className="bg-background rounded-3xl p-6 md:p-12 shadow-2xl border border-slate-200 dark:border-slate-800 relative overflow-hidden min-h-[500px] flex flex-col justify-center">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <AnimatePresence mode="wait">
@@ -318,9 +332,7 @@ export function Contact() {
                                       onCheckedChange={(checked) => {
                                         const values = Array.isArray(field.value) ? field.value : [];
                                         if (checked) {
-                                          if (!values.includes(item.id)) {
-                                            field.onChange([...values, item.id]);
-                                          }
+                                          field.onChange([...values, item.id]);
                                         } else {
                                           field.onChange(values.filter((v) => v !== item.id));
                                         }
@@ -360,9 +372,7 @@ export function Contact() {
                                       onCheckedChange={(checked) => {
                                         const values = Array.isArray(field.value) ? field.value : [];
                                         if (checked) {
-                                          if (!values.includes(item.id)) {
-                                            field.onChange([...values, item.id]);
-                                          }
+                                          field.onChange([...values, item.id]);
                                         } else {
                                           field.onChange(values.filter((v) => v !== item.id));
                                         }
@@ -441,9 +451,7 @@ export function Contact() {
                                         onCheckedChange={(checked) => {
                                           const values = Array.isArray(field.value) ? field.value : [];
                                           if (checked) {
-                                            if (!values.includes(item.id)) {
-                                              field.onChange([...values, item.id]);
-                                            }
+                                            field.onChange([...values, item.id]);
                                           } else {
                                             field.onChange(values.filter((v) => v !== item.id));
                                           }
@@ -474,17 +482,24 @@ export function Contact() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <FormField control={form.control} name="preferredDate" render={({ field }) => (
                         <FormItem className="flex flex-col">
-                          <FormLabel>Preferred Date</FormLabel>
+                          <FormLabel>Preferred Date *</FormLabel>
                           <Popover>
                             <PopoverTrigger asChild>
                               <FormControl>
-                                <Button variant={"outline"} className={cn("w-full pl-3 text-left font-normal h-12 border-slate-200 dark:border-slate-800", !field.value && "text-muted-foreground")}>
-                                  {field.value ? format(field.value, "PPP") : <span>Select a date</span>}
+                                <Button 
+                                  variant={"outline"} 
+                                  className={cn(
+                                    "w-full pl-3 text-left font-normal h-12 border-slate-200 dark:border-slate-800 transition-colors",
+                                    !field.value && "text-muted-foreground",
+                                    form.formState.errors.preferredDate && "border-destructive ring-destructive/20"
+                                  )}
+                                >
+                                  {field.value && !isNaN(field.value.getTime()) ? format(field.value, "PPP") : <span>Select a date</span>}
                                   <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                 </Button>
                               </FormControl>
                             </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent className="w-auto p-0 z-[60]" align="start">
                               <Calendar
                                 mode="single"
                                 selected={field.value}
@@ -499,8 +514,8 @@ export function Contact() {
                       )} />
                       <FormField control={form.control} name="preferredTime" render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Preferred Time Window</FormLabel>
-                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                          <FormLabel>Preferred Time Window *</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
                             <FormControl>
                               <SelectTrigger className="h-12 border-slate-200 dark:border-slate-800">
                                 <SelectValue placeholder="Select time" />
@@ -521,13 +536,13 @@ export function Contact() {
                         <FormLabel className="flex items-center gap-2">
                           <Globe className="h-4 w-4" /> Your Time Zone
                         </FormLabel>
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select onValueChange={field.onChange} value={field.value}>
                           <FormControl>
                             <SelectTrigger className="h-12 border-slate-200 dark:border-slate-800">
                               <SelectValue placeholder="Select timezone" />
                             </SelectTrigger>
                           </FormControl>
-                          <SelectContent>
+                          <SelectContent className="max-h-[300px]">
                             {TIMEZONES.map((tz) => (
                               <SelectItem key={tz.value} value={tz.value}>{tz.label}</SelectItem>
                             ))}
