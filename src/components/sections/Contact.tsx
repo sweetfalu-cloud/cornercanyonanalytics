@@ -314,11 +314,16 @@ export function Contact() {
                                 <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0 border p-4 rounded-xl hover:bg-accent transition-all">
                                   <FormControl>
                                     <Checkbox
-                                      checked={field.value?.includes(item.label)}
+                                      checked={field.value?.includes(item.id) ?? false}
                                       onCheckedChange={(checked) => {
-                                        return checked
-                                          ? field.onChange([...field.value, item.label])
-                                          : field.onChange(field.value?.filter((value) => value !== item.label));
+                                        const values = Array.isArray(field.value) ? field.value : [];
+                                        if (checked) {
+                                          if (!values.includes(item.id)) {
+                                            field.onChange([...values, item.id]);
+                                          }
+                                        } else {
+                                          field.onChange(values.filter((v) => v !== item.id));
+                                        }
                                       }}
                                     />
                                   </FormControl>
@@ -351,11 +356,16 @@ export function Contact() {
                                 <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0 border p-4 rounded-xl hover:bg-accent transition-all">
                                   <FormControl>
                                     <Checkbox
-                                      checked={field.value?.includes(item.label)}
+                                      checked={field.value?.includes(item.id) ?? false}
                                       onCheckedChange={(checked) => {
-                                        return checked
-                                          ? field.onChange([...field.value, item.label])
-                                          : field.onChange(field.value?.filter((value) => value !== item.label));
+                                        const values = Array.isArray(field.value) ? field.value : [];
+                                        if (checked) {
+                                          if (!values.includes(item.id)) {
+                                            field.onChange([...values, item.id]);
+                                          }
+                                        } else {
+                                          field.onChange(values.filter((v) => v !== item.id));
+                                        }
                                       }}
                                     />
                                   </FormControl>
@@ -427,14 +437,19 @@ export function Contact() {
                                   <FormItem key={item.id} className="flex flex-row items-start space-x-3 space-y-0 border p-4 rounded-xl hover:bg-accent transition-all">
                                     <FormControl>
                                       <Checkbox
-                                        checked={field.value?.includes(item.label)}
+                                        checked={field.value?.includes(item.id) ?? false}
                                         onCheckedChange={(checked) => {
-                                          return checked
-                                            ? field.onChange([...field.value, item.label])
-                                            : field.onChange(field.value?.filter((value) => value !== item.label));
-                                      }}
-                                    />
-                                  </FormControl>
+                                          const values = Array.isArray(field.value) ? field.value : [];
+                                          if (checked) {
+                                            if (!values.includes(item.id)) {
+                                              field.onChange([...values, item.id]);
+                                            }
+                                          } else {
+                                            field.onChange(values.filter((v) => v !== item.id));
+                                          }
+                                        }}
+                                      />
+                                    </FormControl>
                                   <FormLabel className="font-medium cursor-pointer">{item.label}</FormLabel>
                                 </FormItem>
                                 )}
