@@ -8,7 +8,7 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
-const PROJECT_NAME = "corner-canyon-analyt-lft9cydqjr_yrncvcneke";
+const PROJECT_NAME = "cornercanyonanalytics";
 const BOOTSTRAP_MARKER = '.bootstrap-complete';
 
 // Check if already bootstrapped
