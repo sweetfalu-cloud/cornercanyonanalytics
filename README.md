@@ -1,6 +1,6 @@
 # Cloudflare React + Hono Starter Template
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/sweetfalu-cloud/cornercanyonanalytics)
 
 A production-ready full-stack starter template for Cloudflare Workers and Pages. Features a modern React frontend with Tailwind CSS, shadcn/ui components, TanStack Query, React Router, and a Hono-powered API backend. Perfect for rapid development of performant, edge-deployed applications.
 
@@ -114,7 +114,7 @@ Deploy to Cloudflare Workers/Pages:
 
 Your app will be live at `https://${wrangler_project_name}.workers.dev`.
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/sweetfalu-cloud/cornercanyonanalytics)
 
 ## Scripts
 
