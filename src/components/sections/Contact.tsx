@@ -51,9 +51,8 @@ const contactSchema = z.object({
   challenge: z.string().min(10, 'Please provide a bit more detail (min 10 chars)'),
   timing: z.enum(['Just exploring', '1-3 months', 'Upcoming deadline']),
   users: z.array(z.string()).min(1, 'Please select who will use the insights'),
-  preferredDate: z.date({ 
-    required_error: "Please select a preferred date for our call",
-    invalid_type_error: "That's not a valid date",
+  preferredDate: z.date().refine((date): date is Date => !!date && !isNaN(date.getTime()), {
+    message: "Please select a preferred date for our call"
   }),
   preferredTime: z.string().min(1, 'Please select a preferred time window'),
   timezone: z.string().min(1, 'Please select your timezone'),
@@ -458,8 +457,8 @@ export function Contact() {
                                         }}
                                       />
                                     </FormControl>
-                                  <FormLabel className="font-medium cursor-pointer">{item.label}</FormLabel>
-                                </FormItem>
+                                    <FormLabel className="font-medium cursor-pointer">{item.label}</FormLabel>
+                                  </FormItem>
                                 )}
                               />
                             ))}
