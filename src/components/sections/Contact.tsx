@@ -98,12 +98,6 @@ const TIMEZONES = [
   { label: 'Central Time (CT)', value: 'America/Chicago' },
   { label: 'Mountain Time (MT)', value: 'America/Denver' },
   { label: 'Pacific Time (PT)', value: 'America/Los_Angeles' },
-  { label: 'London (GMT/BST)', value: 'Europe/London' },
-  { label: 'Central Europe (CET)', value: 'Europe/Paris' },
-  { label: 'India (IST)', value: 'Asia/Kolkata' },
-  { label: 'Singapore/HK (SGT)', value: 'Asia/Singapore' },
-  { label: 'Australia (AEST)', value: 'Australia/Sydney' },
-  { label: 'UTC', value: 'UTC' },
 ];
 export function Contact() {
   const [step, setStep] = useState(0);
