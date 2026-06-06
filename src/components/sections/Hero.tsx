@@ -26,8 +26,8 @@ export function Hero() {
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
             className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-extrabold text-foreground tracking-tight leading-[1.05] md:leading-[1.1]"
           >
-            Predict the Future with <br className="hidden md:block" />
-            <span className="text-gradient-canyon inline-block mt-2">Canyon-Deep Insights</span>
+            Go Beyond the Surface <br className="hidden md:block" />
+            <span className="text-gradient-canyon inline-block mt-2">See What Data Reveals</span>
           </motion.h1>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
